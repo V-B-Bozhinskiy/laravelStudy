@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,8 +20,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function (){
-    return 'Hello TEST!';
+Route::prefix('admin')->middleware('is_admin')->group(function () {
+    Route::get('/users', [AdminController::class, 'users'])->name('adminUsers');
+    Route::get('/products', [AdminController::class, 'products'])->name('adminProducts');
+    Route::get('/categories', [AdminController::class, 'categories'])->name('adminCategories');
 });
 
 Auth::routes();
