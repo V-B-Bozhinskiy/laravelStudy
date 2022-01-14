@@ -1,1 +1,11 @@
-<h1>Список Категорий</h1>
+@extends('layouts.app')
+
+@section('title')
+    Список категорий
+@endsection
+
+@section('content')
+<h1>
+    Список категорий
+</h1>
+@endsection
