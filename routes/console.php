@@ -31,6 +31,7 @@ Artisan::command('parceEkatalog', function () {
         $divs = $xpath->query("//div[@class='model-short-div list-item--goods   ']");
         
         if ($i == 0){
+            try{
             $totalProductsString = $xpath->query("//span[@class='t-g-q']")[0]->nodeValue ?? false;
 
             preg_match_all('/\d+/', $totalProductsString, $matches);
@@ -41,6 +42,9 @@ Artisan::command('parceEkatalog', function () {
             $productsOnOnePage = $divs->length;
             $pages = ceil($totalProducts / $productsOnOnePage);
             dump($pages);
+            } catch (Exception $e){
+                $pages = 0;
+            }
             $products = [];
         }
 
