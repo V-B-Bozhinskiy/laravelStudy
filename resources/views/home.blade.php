@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
+@auth
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -19,5 +21,23 @@
             </div>
         </div>
     </div>
+@endauth
+  <div class="row">
+    @foreach ($categories as $category)
+    <div class="card col-4">
+    <img src="{{asset('storage')}}/{{$category->picture}}" class="card-img-top" alt="{{$category->name}}">
+        <div class="card-body">
+            <h5 class="card-title">
+                {{$category->name}}
+            </h5>
+            <p class="card-text">
+                {{$category->description}}
+            </p>
+            <a href="{{ route('category', $category->id) }}" class="btn btn-primary">Перейти</a>
+        </div>
+    </div>
+    @endforeach
+  </div>
 </div>
+
 @endsection

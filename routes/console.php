@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('parceEkatalog', function () {
     $i = 0;
     do {
-        $url = 'https://www.e-katalog.ru/ek-list.php?katalog_=189&search_=rtx+3090'."&page_=$i";
+        $url = 'https://www.e-katalog.ru/ek-list.php?katalog_=189&search_=rtx+3090';
+        if ($i > 0){
+            $url = $url."&page_=$i";
+        }
         //$url = 'https://yandex.ru';
 
         $data = file_get_contents($url);
@@ -29,7 +32,8 @@ Artisan::command('parceEkatalog', function () {
 
         $xpath = new DOMXPath($dom);
         $divs = $xpath->query("//div[@class='model-short-div list-item--goods   ']");
-        
+        //dd($divs);
+
         if ($i == 0){
             try{
             $totalProductsString = $xpath->query("//span[@class='t-g-q']")[0]->nodeValue ?? false;
@@ -73,7 +77,38 @@ Artisan::command('parceEkatalog', function () {
         }
     $i++;
     } while ($i<$pages);
-    dd($products);
+    
+    //Создание файла по результату парсинга
+    $file = fopen('videocards.csv', 'w',);
+    foreach ($products as $product){
+        fputcsv($file, $product, ';');
+    } 
+    fclose($file);
+});
+
+Artisan::command('importCategoriesFromFile', function () {
+    $file = fopen('categories.csv','r');
+
+    $i = 0;
+    $insert = [];
+    while ($row = fgetcsv($file, 1000,';')){
+        if ($i++ == 0){
+            $bom = pack('H*','EFBBBF');               //Удаление невидимого символа в csv, 
+            $row = preg_replace("/^$bom/", '', $row); //который ломает сохранение в БД
+            $columns = $row;
+            continue;
+        }
+        //dump($columns);
+
+        $data = array_combine($columns,$row);
+        //dump($data);
+
+        $data['created_at'] = date('Y-m-d H:i:s'); 
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $insert[] = $data;
+    }
+    //dd($insert);
+    Category::insert($insert);
 });
 
 Artisan::command('massInsert', function () {
