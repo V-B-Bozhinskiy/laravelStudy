@@ -3,6 +3,8 @@
 use App\Models\Category;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,13 +130,16 @@ Artisan::command('massInsert', function () {
 });
 
 Artisan::command('updateCategory', function () {
-    Category::where('id',1)->update([ //1 это id = 1
+    Auth::loginUsingId(1);
+    Category::find(6)->update([ //6 это id = 6
         'name' => 'Процессоры'
     ]); 
 });
 
 Artisan::command('deleteCategory', function () {
-    Category::where('id',1)->delete(); //1 это id = 1
+    Auth::loginUsingId(1);
+    //Category::where('id',15)->delete(); //14 это id = 14 // это удаление не отобразится в observer
+    Category::find(15)->delete(); //14 это id = 14 // это удаление отобразится в observer
 });
 
 Artisan::command('deleteAllCategories', function () {
@@ -142,16 +147,44 @@ Artisan::command('deleteAllCategories', function () {
 });
 
 Artisan::command('createCategory', function () {
+    Auth::loginUsingId(1);
     $category = new Category([
         'name' => 'Видеокарты',
-        'description' => "RTX 3050 
-(Не надо. 
- Не надо давать мне надежду...)"
+        'description' => "RTX 3060"
     ]);
     $category->save();
-    dd($category);
 });
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('queryBuilder', function (){
+    
+   $data = DB::table('categories as c') //название таблицы в БД
+        ->select(
+            'c.name',
+            'c.description'
+        )
+        ->where('name','Процессоры')
+        ->get(); //возвращается массив ОБЪЕКТОВ, но для них недоступны их методы
+   // dd($data);
+
+   $data = DB::table('categories as c')
+        ->select(
+            'c.name',
+            DB::raw('count(p.id) as product_quantity') //Чтобы вызвать функцию MYSQL
+        )
+        ->join('products as p', function ($join){
+            $join->on('c.id', 'p.category_id');
+        })
+        ->groupBy('c.id')
+        ->get();
+
+    DB::table('categories')
+        ->orderBy('id')
+        ->chunk(4, function ($categories){ // разделение обработки всей таблицы на участки по n (в примере=4) элементов
+            dump($categories->count());
+        });
+    dd($data);
+});

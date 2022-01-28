@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ExportCategories;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,5 +43,12 @@ class AdminController extends Controller
     {
         Auth::loginUsingId($id);
         return redirect()->route('home');
+    }
+
+    public function exportCategories()
+    {
+        ExportCategories::dispatch();
+        session()->flash('startExportCategories');
+        return back();
     }
 }

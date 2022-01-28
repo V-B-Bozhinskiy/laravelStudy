@@ -1,0 +1,6 @@
+id;name;description;picture;created_at;updated_at
+5;Видеокарты;test1;categories/noimage.jpg;2022-01-19T19:02:46.000000Z;
+6;Процессоры;test2;categories/noimage.jpg;2022-01-19T19:02:46.000000Z;
+7;"Жесткие диски";"HDD, SSD";categories/noimage.jpg;2022-01-24T17:18:32.000000Z;2022-01-24T17:18:32.000000Z
+8;"Оперативная память";"DDR4, DDR5";categories/noimage.jpg;2022-01-24T17:18:32.000000Z;2022-01-24T17:18:32.000000Z
+9;Корпуса;"Aerocool, Deepcool, Zotac, Zalman";categories/noimage.jpg;2022-01-24T17:18:32.000000Z;2022-01-24T17:18:32.000000Z
