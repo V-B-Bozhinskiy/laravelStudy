@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,12 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function () {
     Route::get('/enterAsUser/{id}', [AdminController::class, 'enterAsUser'])->name('enterAsUser');
     
     Route::post('/exportCategories', [AdminController::class, 'exportCategories'])->name('exportCategories');
+});
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'cart'])->name('cart');
+    Route::post('/removeFromCart', [CartController::class, 'removeFromCart'])->name('removeFromCart');
+    Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
 });
 
 Auth::routes();
