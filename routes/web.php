@@ -40,3 +40,5 @@ Auth::routes();
 Route::get('/category/{category}', [HomeController::class, 'category'])->name('category');
 Route::get('/profile/{id}', [ProfileController::class, 'profile'])->name('profile');
 Route::post('/profile/save', [ProfileController::class, 'save'])->name('saveProfile');
+Route::post('/profile/setMainAddr', [ProfileController::class, 'setMainAddr'])->name('setMainAddr');
+Route::post('/profile/deleteUserAddress', [ProfileController::class, 'deleteUserAddress'])->name('deleteUserAddress');

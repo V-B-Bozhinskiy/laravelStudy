@@ -23,6 +23,7 @@ class ProfileController extends Controller
         $userId = $input['userId'];
         $picture = $input['picture'] ?? null;
         $newAddress = $input['new_address'];
+        $addAsMainAddress = $input['addAsMainAddress'] ?? 0;
         $user = User::find($userId);
         // dd(request());
 
@@ -33,13 +34,15 @@ class ProfileController extends Controller
        ]);
        
        if ($newAddress){
-           Address::where('user_id', $user->id)->update([
+           if ($addAsMainAddress == 1){
+                Address::where('user_id', $user->id)->update([
                 'main' => 0
-           ]);
+                ]);
+           }
            Address::create([
                'user_id' => $user->id,
                'address' => $newAddress,
-               'main' => 1
+               'main' => $addAsMainAddress
            ]);
        }
 
@@ -55,5 +58,26 @@ class ProfileController extends Controller
        $user->save();
 
        return back();
+    }
+
+    public function setMainAddr (Request $request)
+    {
+        $input = request()->all();
+        $addrId = $input['addrId'];
+        $userId = $input['userId'];
+        $user = User::find($userId);
+        Address::where('user_id', $user->id)->update([
+            'main' => 0
+        ]);
+        Address::where('id', $addrId)->update([
+            'main' => 1
+        ]);
+        return back();
+    }
+    public function deleteUserAddress (Request $request){
+        $input = request()->all();
+        $addrId = $input['addrId'];
+        Address::find($addrId)->delete();
+        return back();
     }
 }

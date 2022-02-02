@@ -14,6 +14,30 @@
     .main-address{
         font-weight: bold;
     }
+    .address-buttons{
+        display: flex;
+        justify-content: flex-start;
+        line-height: 37px;
+    }
+    .btn-addr-setMain {
+    border-radius: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    }
+
+    .btn-addr-delete {
+    border-radius: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    }
 </style>
 @endsection
 
@@ -45,21 +69,38 @@
         <input value="{{ $user->name }}" class="form-control" name="name">
     </div>
     <div class="mb-3">
-        <label class="form-label">Список адресов:</label>
+        <label class="form-label">Адрес</label>
+        <input value="" class="form-control" name="new_address">
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" name="addAsMainAddress" value=1>Назначить основным</p>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+    <br>
+    <div class="mb-3">
+        <label class="form-label">Список сохраненных адресов:</label>
         <ul>
             @forelse ($user->addresses as $address)
                 <li @if($address->main) class="main-address" @endif>
-                    {{$address->address}}
+                    <div class="address-buttons">
+                        <form method="post" action="{{ route('setMainAddr') }}" >
+                        @csrf
+                        <input type="hidden" value="{{ $user->id }}" name='userId'>
+                        <input type="hidden" value="{{ $address->id }}" name='addrId'>
+                        <button type="submit" class="btn btn-primary btn-addr-setMain" title = "Установить основным">⌂</button>
+                        </form>
+                        {{$address->address}}
+                        <form method="post" action="{{ route('deleteUserAddress') }}" >
+                        @csrf
+                        <input type="hidden" value="{{ $address->id }}" name='addrId'>
+                        <button type="submit" class="btn btn-danger btn-addr-delete" title = "Удалить сохраненный адрес">🗑</button>
+                        </form>
+                    </div>
                 </li>
             @empty
                 <em>Адресов ранее не сохранено</em>
             @endforelse
         </ul>
     </div>
-    <div class="mb-3">
-        <label class="form-label">Новый адрес</label>
-        <input value="" class="form-control" name="new_address">
-    </div>
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-    </form>
 @endsection
