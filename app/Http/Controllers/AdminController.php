@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ExportCategories;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,13 +32,16 @@ class AdminController extends Controller
     }
 
     public function products()
-    {
-        return view('admin.products');
+    {   
+        $products = Product::get();
+        $categories = Category::get();
+        return view('admin.products', compact('products','categories'));
     }
     
     public function categories()
     {
-        return view('admin.categories');
+        $categories = Category::get();
+        return view('admin.categories', compact('categories'));
     }
 
     public function enterAsUser($id)
