@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function cart() {
-        $cart = session('cart');
+        $cart = session('cart') ?? [];
         $products = Product::whereIn('id', array_keys($cart))
             ->get()
             ->transform(function ($product) use ($cart){
                 $product->quantity = $cart[$product->id];
                 return $product;
             });
-        return view('cart', compact('products'));
+
+        $user = Auth::user();
+        
+        return view('cart', compact('products','user'));
     }
 
     public function removeFromCart () {
@@ -47,6 +52,30 @@ class CartController extends Controller
         }
 
         session()->put('cart',$cart);
+        return back();
+    }
+
+    public function createOrder(){
+        $user = Auth::user();
+        if ($user){
+            $address = $user->getMainAddress();
+            
+            $cart = session('cart');
+            
+            $order = Order::create([
+                'user_id' => $user->id,
+                'address_id' => $address->id
+            ]);
+
+            foreach ($cart as $id => $quantity){
+                $product = Product::find($id);
+                $order->products()->attach($product, [
+                    'quantity' => $quantity,
+                    'price' => $product->price
+                ]);
+            }
+        }
+        session()->forget('cart');
         return back();
     }
 }

@@ -66,4 +66,13 @@
             </tr>
         </tbody>
     </table>
+    @if ($summ)
+    <form method="post" action="{{ route('createOrder') }}">
+        @csrf
+        <input class="form-control mb-2" name="name" value="{{ $user->name ?? ''}}">
+        <input class="form-control mb-2" name="email" value="{{ $user->email ?? ''}}">
+        <input class="form-control mb-2" name="address" value="{{ $user->addresses()->where('main', 1)->first()->address ?? ''}}">
+        <button type="submit" class="btn btn-success">Оформить заказ</button>
+    </form>
+    @endif
 @endsection

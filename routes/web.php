@@ -33,6 +33,7 @@ Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'cart'])->name('cart');
     Route::post('/removeFromCart', [CartController::class, 'removeFromCart'])->name('removeFromCart');
     Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::post('/createOrder', [CartController::class, 'createOrder'])->name('createOrder');
 });
 
 Auth::routes();
