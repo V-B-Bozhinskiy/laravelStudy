@@ -68,10 +68,27 @@
         <label class="form-label">Имя</label>
         <input value="{{ $user->name }}" class="form-control" name="name">
     </div>
+    
+    <div class="mb-3">
+        <lable class="form-lable">Текущий пароль</lable>
+        <input type="password" name="current_password" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <lable class="form-lable">Новый пароль</lable>
+        <input type="password" name="password" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <lable class="form-lable">Повторите новый пароль</lable>
+        <input type="password" name="password_confirmation" class="form-control">
+    </div>
+
     <div class="mb-3">
         <label class="form-label">Адрес</label>
         <input value="" class="form-control" name="new_address">
     </div>
+    
     <div class="mb-3">
         <input type="checkbox" name="addAsMainAddress" value=1>Назначить основным</p>
     </div>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderCreated;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
@@ -75,6 +77,14 @@ class CartController extends Controller
                 ]);
             }
         }
+
+        //Подготовка письма.
+        $data = [
+            'products' => $order->products,
+            'name' => $user->name
+        ];
+        Mail::to($user->email)->send(new OrderCreated($data));
+
         session()->forget('cart');
         return back();
     }

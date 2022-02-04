@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -30,8 +31,15 @@ class ProfileController extends Controller
         request()->validate([
             'name' => 'required',
             'email' => "email|required|unique:users,email,{$user->id}",
-            'picture' => 'mimes:jpg,bmp,webp'
+            'picture' => 'mimes:jpg,bmp,webp',
+            'current_password' => 'current_password|nullable',
+            'password' => 'confirmed|min:8|nullable' //проверяет совпадение password_confirmation и password
        ]);
+
+       if ($input['current_password']){
+        $user->password = Hash::make($input['password']);
+        $user->save();
+       }
        
        if ($newAddress){
            if ($addAsMainAddress == 1){
