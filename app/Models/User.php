@@ -42,6 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function roles(){
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
     public function addresses()
     {
         return $this->hasMany(Address::class);
@@ -49,5 +53,9 @@ class User extends Authenticatable
 
     public function getMainAddress(){
         return $this->addresses()->where('main',1)->first();
+    }
+
+    public function isAdmin(){
+        return $this->roles->pluck('name')->contains(env('ADMIN_ROLE'));
     }
 }

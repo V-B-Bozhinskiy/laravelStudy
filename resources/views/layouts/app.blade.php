@@ -59,7 +59,7 @@
                                 </li>
                             @endif
                         @else
-                            @if (Auth::user()->is_admin)
+                            @if (Auth::user()->isAdmin())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin')}}" >Админка</a>
                             </li>

@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OrderCreated;
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
@@ -21,8 +27,9 @@ class CartController extends Controller
             });
 
         $user = Auth::user();
+        $address = $user ? $user->addresses()->where('main', 1)->first()->address ?? '' : '';
         
-        return view('cart', compact('products','user'));
+        return view('cart', compact('products','user', 'address'));
     }
 
     public function removeFromCart () {
@@ -58,34 +65,61 @@ class CartController extends Controller
     }
 
     public function createOrder(){
-        $user = Auth::user();
-        if ($user){
-            $address = $user->getMainAddress();
-            
-            $cart = session('cart');
-            
-            $order = Order::create([
-                'user_id' => $user->id,
-                'address_id' => $address->id
-            ]);
+        request()->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+        ]);
 
-            foreach ($cart as $id => $quantity){
-                $product = Product::find($id);
-                $order->products()->attach($product, [
-                    'quantity' => $quantity,
-                    'price' => $product->price
-                ]);
-            }
-        }
+        try{
+        DB::transaction(function () {
+            $user = Auth::user();
+                if (!$user){
+                    $password = Str::random(8);
+                    $user = User::create([
+                        'name' => request('name'),
+                        'email' => request('email'),
+                        'password' => Hash::make($password)
+                    ]);
 
-        //Подготовка письма.
-        $data = [
-            'products' => $order->products,
-            'name' => $user->name
-        ];
-        Mail::to($user->email)->send(new OrderCreated($data));
+                    $address = Address::create([
+                        'user_id' => $user->id,
+                        'address' => request('address'),
+                        'main' => 1
+                    ]);
 
+                    Auth::loginUsingId($user->id);
+                }
+
+                $address = $user->getMainAddress();
+                    
+                    $cart = session('cart');
+                    
+                    $order = Order::create([
+                        'user_id' => $user->id,
+                        'address_id' => $address->id
+                    ]);
+
+                    foreach ($cart as $id => $quantity){
+                        $product = Product::find($id);
+                        $order->products()->attach($product, [
+                            'quantity' => $quantity,
+                            'price' => $product->price
+                        ]);
+                    }
+
+                //Подготовка письма.
+                $data = [
+                    'products' => $order->products,
+                    'name' => $user->name,
+                    'password' => $password
+                ];
+                Mail::to($user->email)->send(new OrderCreated($data));
+        });
         session()->forget('cart');
         return back();
+        } catch (Exception $e) {
+            return back();        
+        }   
     }
 }

@@ -51,6 +51,11 @@
         </div>
     @endif
 
+    @if (session('profileSaved'))
+        <div class="alert alert-success" role="alert">
+            Изменения успешно применены
+        </div>
+    @endif
     <form method="post" action="{{ route('saveProfile') }}" enctype="multipart/form-data">
     @csrf
     <input type="hidden" value="{{ $user->id }}" name='userId'>

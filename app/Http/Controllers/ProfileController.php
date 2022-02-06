@@ -10,10 +10,14 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    public function profile($id)
+    public function profile(User $user)
     {
-        $user = User::findOrFail($id);
-        return view('profile', compact('user'));
+        if (Auth::user()){
+            if ( (Auth::user()->isAdmin()) || ($user->id == Auth::user()->id) ){
+                return view('profile', compact('user'));
+            }
+        }
+        return redirect()->route('home');
     }
 
     public function save (Request $request)
@@ -65,6 +69,7 @@ class ProfileController extends Controller
        $user->email = $email;
        $user->save();
 
+       session()->flash('profileSaved');
        return back();
     }
 
