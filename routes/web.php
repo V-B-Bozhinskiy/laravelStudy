@@ -24,6 +24,7 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function () {
     Route::get('/users', [AdminController::class, 'users'])->name('adminUsers');
     Route::get('/products', [AdminController::class, 'products'])->name('adminProducts');
     Route::get('/categories', [AdminController::class, 'categories'])->name('adminCategories');
+    Route::post('/categories/add', [AdminController::class, 'addCategory'])->name('adminAddCategory');
     Route::get('/enterAsUser/{id}', [AdminController::class, 'enterAsUser'])->name('enterAsUser');
     Route::prefix('roles')->group(function (){
         Route::post('/add',[AdminController::class, 'addRole'])->name('addRole');

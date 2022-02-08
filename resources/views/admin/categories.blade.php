@@ -5,6 +5,38 @@
 @endsection
 
 @section('content')
+
+@if ($errors->isNotEmpty())
+        <div class="alert alert-warning" role="alert">
+            @foreach ($errors->all() as $error)
+                {{ $error }} 
+                @if (!$loop->last) <br> @endif
+            @endforeach
+        </div>
+@endif
+
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Добавить категорию
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <form method="post" action="{{route('adminAddCategory')}}" class="mb-4" enctype="multipart/form-data">
+            @csrf
+            <input class="form-control mb-2" name='name' placeholder="Наименование категории">
+            <textarea class="form-control mb-2" name='description' placeholder="Описание категории"></textarea>
+            <label class="form-label">Изображение для категории</label>
+            <input type="file" name="picture" class="form-control mb-2">
+            <button class="btn btn-success" type="submit">Добавить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <h1>
     Список категорий
 </h1>

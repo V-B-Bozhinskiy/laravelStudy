@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -90,7 +91,11 @@ class ProfileController extends Controller
     public function deleteUserAddress (Request $request){
         $input = request()->all();
         $addrId = $input['addrId'];
-        Address::find($addrId)->delete();
+        try{
+            Address::find($addrId)->delete();
+        } catch (Exception $e) {
+            return back()->withErrors("Нельзя удалить этот адрес, так как с ним ранее уже был связан заказ!");
+        }
         return back();
     }
 }

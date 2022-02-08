@@ -60,8 +60,37 @@ class AdminController extends Controller
         return back();
     }
 
-    public function addRole()
+    public function addCategory()
     {
+        $input = request()->all();
+        $name = $input['name'];
+        $description = $input['description'];
+        $picture = $input['picture'] ?? null;
+
+        request()->validate([
+            'name' => 'required|min:3',
+            'description' => 'required',
+            'picture' => 'mimes:jpg,bmp,webp|nullable'
+        ]);
+
+        $newCategory = Category::create([
+            'name' => $name,
+            'description' => $description
+        ]);
+
+        if ($picture){
+            $ext = $picture->getClientOriginalExtension();
+            $filename = time() . rand(10000,99999) . '.' . $ext;
+            $picture->storeAs('public/categories',$filename);
+            $newCategory->picture = "categories/$filename";
+        }
+
+        $newCategory->save();
+        return back();
+    }
+
+    public function addRole()
+    {   
         request()->validate([
             'name' => 'required|min:3',
         ]);
