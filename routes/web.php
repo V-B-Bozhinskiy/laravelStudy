@@ -30,6 +30,7 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function () {
         Route::post('/add',[AdminController::class, 'addRole'])->name('addRole');
         Route::post('/addRoleToUser',[AdminController::class, 'addRoleToUser'])->name('addRoleToUser');
     });
+    Route::get('/orders', [AdminController::class, 'orders'])->name('adminOrders');
     
     Route::post('/exportCategories', [AdminController::class, 'exportCategories'])->name('exportCategories');
 });
@@ -45,6 +46,7 @@ Auth::routes();
 
 Route::get('/category/{category}', [HomeController::class, 'category'])->name('category');
 Route::get('/profile/{user}', [ProfileController::class, 'profile'])->name('profile');
+Route::get('/profile/{user}/orders', [ProfileController::class, 'userOrders'])->name('userOrders');
 Route::post('/profile/save', [ProfileController::class, 'save'])->name('saveProfile');
 Route::post('/profile/setMainAddr', [ProfileController::class, 'setMainAddr'])->name('setMainAddr');
 Route::post('/profile/deleteUserAddress', [ProfileController::class, 'deleteUserAddress'])->name('deleteUserAddress');

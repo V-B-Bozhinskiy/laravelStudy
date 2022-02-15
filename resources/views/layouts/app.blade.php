@@ -12,8 +12,9 @@
     </title>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/test.js') }}" defer></script>
+    <!-- <script src="{{ asset('js/test.js') }}" defer></script> -->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -72,6 +73,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('profile', Auth::user()->id) }}"> Профиль </a>
+                                    <a class="dropdown-item" href="{{ route('userOrders', Auth::user()->id) }}"> Мои заказы </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -90,6 +92,11 @@
         </nav>
 
         <main class="py-4">
+            <!--
+            <div class="mb-4">
+                <example-component></example-component>
+            </div>
+            -->
             @yield('content')
         </main>
     </div>

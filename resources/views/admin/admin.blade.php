@@ -11,4 +11,6 @@
     <br>
     <a href="{{ route('adminCategories')}}"> Список категорий </a>
     <br>
+    <a href="{{ route('adminOrders')}}"> Список заказов </a>
+    <br>
 @endsection

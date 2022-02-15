@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Order;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -41,9 +42,11 @@ class ProfileController extends Controller
             'password' => 'confirmed|min:8|nullable' //проверяет совпадение password_confirmation и password
        ]);
 
-       if ($input['current_password']){
-        $user->password = Hash::make($input['password']);
-        $user->save();
+       if ($input['password']){
+        if ($input['current_password']){
+            $user->password = Hash::make($input['password']);
+            $user->save();
+        }
        }
        
        if ($newAddress){
@@ -97,5 +100,19 @@ class ProfileController extends Controller
             return back()->withErrors("Нельзя удалить этот адрес, так как с ним ранее уже был связан заказ!");
         }
         return back();
+    }
+    
+    public function userOrders(User $user){
+        if (Auth::user()){
+            if ( (Auth::user()->isAdmin()) || ($user->id == Auth::user()->id) ){
+                $orders = Order::where('user_id', $user->id)->get();
+                $data = [
+                    'orders' => $orders
+                ];
+                //dd($data);
+                return view('orders',$data);
+            }
+        }
+        return redirect()->route('home');
     }
 }

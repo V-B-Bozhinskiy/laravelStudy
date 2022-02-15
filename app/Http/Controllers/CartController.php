@@ -74,6 +74,7 @@ class CartController extends Controller
         try{
         DB::transaction(function () {
             $user = Auth::user();
+                $password = '';
                 if (!$user){
                     $password = Str::random(8);
                     $user = User::create([
@@ -111,14 +112,17 @@ class CartController extends Controller
                 //Подготовка письма.
                 $data = [
                     'products' => $order->products,
-                    'name' => $user->name,
-                    'password' => $password
+                    'name' => $user->name
                 ];
+                if ($password){
+                    $data['password'] = $password;
+                }
                 Mail::to($user->email)->send(new OrderCreated($data));
         });
         session()->forget('cart');
         return back();
         } catch (Exception $e) {
+            //dd($e);
             return back();        
         }   
     }

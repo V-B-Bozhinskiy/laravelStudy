@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="container">
+<!--
 @auth
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -22,6 +23,7 @@
         </div>
     </div>
 @endauth
+-->
   <div class="row">
     @foreach ($categories as $category)
     <div class="card col-4">

@@ -41,6 +41,19 @@
     Список категорий
 </h1>
 
+@if (session('startExportCategories'))
+<div class="alert alert-success">
+    Выгрузка категорий запущена
+</div>
+@endif
+
+<div class="container">
+    <form method="post" action="{{route('exportCategories')}}">
+        @csrf
+        <button type="submit" class="btn btn-link">Выгрузить категории</button>
+    </form>
+</div>
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -72,16 +85,4 @@
     </tbody>
 </table>
 
-@if (session('startExportCategories'))
-<div class="alert alert-success">
-    Выгрузка категорий запущена
-</div>
-@endif
-
-<div class="container">
-    <form method="post" action="{{route('exportCategories')}}">
-        @csrf
-        <button type="submit" class="btn btn-link">Выгрузить категории</button>
-    </form>
-</div>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ExportCategories;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
@@ -111,5 +112,13 @@ class AdminController extends Controller
         $user = User::find(request('user_id'));
         $user->roles()->attach(Role::find(request('role_id')));
         return back();
+    }
+
+    public function orders(){
+        $orders = Order::get();
+        $data = [
+            'orders' => $orders
+        ];
+        return view('admin.orders',$data);
     }
 }
