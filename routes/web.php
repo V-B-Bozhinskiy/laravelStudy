@@ -23,6 +23,7 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function () {
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
     Route::get('/users', [AdminController::class, 'users'])->name('adminUsers');
     Route::get('/products', [AdminController::class, 'products'])->name('adminProducts');
+    Route::post('/product/add', [AdminController::class, 'addProduct'])->name('adminAddProduct');
     Route::get('/categories', [AdminController::class, 'categories'])->name('adminCategories');
     Route::post('/categories/add', [AdminController::class, 'addCategory'])->name('adminAddCategory');
     Route::get('/enterAsUser/{id}', [AdminController::class, 'enterAsUser'])->name('enterAsUser');
@@ -40,6 +41,7 @@ Route::prefix('cart')->group(function () {
     Route::post('/removeFromCart', [CartController::class, 'removeFromCart'])->name('removeFromCart');
     Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
     Route::post('/createOrder', [CartController::class, 'createOrder'])->name('createOrder');
+    Route::post('/retryOrder', [CartController::class, 'retryOrder'])->name('retryOrder');
 });
 
 Auth::routes();

@@ -80,7 +80,7 @@ return [
     'multiple_of' => ':attribute должно быть кратно :value',
     'not_in' => ':attribute не верное значение.',
     'not_regex' => ':attribute неверный формат',
-    'numeric' => ':attribute must be a number.',
+    'numeric' => ':attribute должна быть числом',
     'password' => 'Некоректный пароль.',
     'present' => 'Поле :attribute незаполнено.',
     'regex' => ':attribute неверный формат.',
@@ -136,6 +136,9 @@ return [
 
     'attributes' => [
         'name'=> 'Имя',
-        'email' => 'Почта'
+        'email' => 'Почта',
+        'price' => 'Цена',
+        'category_id' => 'Категория',
+        'description' => 'Описание'
     ],
 ];

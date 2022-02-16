@@ -107,7 +107,8 @@ class ProfileController extends Controller
             if ( (Auth::user()->isAdmin()) || ($user->id == Auth::user()->id) ){
                 $orders = Order::where('user_id', $user->id)->get();
                 $data = [
-                    'orders' => $orders
+                    'orders' => $orders,
+                    'user' => $user
                 ];
                 //dd($data);
                 return view('orders',$data);

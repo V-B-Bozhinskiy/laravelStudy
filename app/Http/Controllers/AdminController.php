@@ -90,6 +90,37 @@ class AdminController extends Controller
         return back();
     }
 
+    public function addProduct(){
+        request()->validate([
+            'name' => 'required|min:3',
+            'description' => 'required',
+            'category_id' => 'required',
+            'price' => 'required|numeric',
+            'picture' => 'mimes:jpg,bmp,webp|nullable'
+        ]);
+        $input = request()->all();
+        $name = $input['name'];
+        $description = $input['description'];
+        $picture = $input['picture'] ?? null;
+        $price = $input['price'];
+        $category_id = $input['category_id'];
+        $newProduct = Product::create([
+            'name' => $name,
+            'description' => $description,
+            'price' => $price,
+            'category_id' => $category_id
+        ]);
+        if ($picture){
+            $ext = $picture->getClientOriginalExtension();
+            $filename = time() . rand(10000,99999) . '.' . $ext;
+            $picture->storeAs('public/products',$filename);
+            $newProduct->picture = "products/$filename";
+        }
+
+        $newProduct->save();
+        return back();
+    }
+
     public function addRole()
     {   
         request()->validate([
@@ -116,8 +147,10 @@ class AdminController extends Controller
 
     public function orders(){
         $orders = Order::get();
+        $users = User::get();
         $data = [
-            'orders' => $orders
+            'orders' => $orders,
+            'users' => $users
         ];
         return view('admin.orders',$data);
     }

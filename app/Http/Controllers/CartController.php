@@ -126,4 +126,26 @@ class CartController extends Controller
             return back();        
         }   
     }
+
+    public function retryOrder(){
+        $orderId = request('id');
+        $order = Order::find($orderId);
+        foreach ( $order->products as $product){
+            for ($i = 0; $i < $product->pivot->quantity; $i++){
+                //! Почти дублирует addToCart() кроме передачи productId
+                $productId = $product->id;
+                $cart = session('cart') ?? [];
+
+                if (isset($cart[$productId])){
+                    $cart[$productId] = ++$cart[$productId];
+                } else {
+                    $cart[$productId] = 1;
+                }
+
+                session()->put('cart',$cart);
+                //!
+            }
+        }
+        return redirect()->route('cart');
+    }
 }
