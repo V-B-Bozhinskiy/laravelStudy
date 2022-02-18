@@ -34,6 +34,7 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function () {
     Route::get('/orders', [AdminController::class, 'orders'])->name('adminOrders');
     
     Route::post('/exportCategories', [AdminController::class, 'exportCategories'])->name('exportCategories');
+    Route::post('/exportProducts', [AdminController::class, 'exportProducts'])->name('exportProducts');
 });
 
 Route::prefix('cart')->group(function () {

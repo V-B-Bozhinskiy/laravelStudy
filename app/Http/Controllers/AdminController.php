@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ExportCategories;
+use App\Jobs\ExportProducts;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
@@ -58,6 +59,13 @@ class AdminController extends Controller
     {
         ExportCategories::dispatch();
         session()->flash('startExportCategories');
+        return back();
+    }
+
+    public function exportProducts()
+    {
+        ExportProducts::dispatch();
+        session()->flash('startExportProducts');
         return back();
     }
 

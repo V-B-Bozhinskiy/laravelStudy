@@ -44,6 +44,19 @@
   </div>
 </div>
 
+@if (session('startExportProducts'))
+<div class="alert alert-success">
+    Выгрузка продуктов запущена
+</div>
+@endif
+
+<div class="container">
+    <form method="post" action="{{route('exportProducts')}}">
+        @csrf
+        <button type="submit" class="btn btn-link">Выгрузить продукты</button>
+    </form>
+</div>
+
 <h1>
     Список продуктов
 </h1>
