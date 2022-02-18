@@ -5300,33 +5300,117 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      inputText: '',
+      text: '',
       name: 'Vyacheslav',
+      lastname: 'Bozhko-Bozhinskiy',
       counter: 0,
+      selected: null,
+      options: [1, 2, 3],
+      users: [],
       showPicture: true,
       categories: [{
-        id: 1,
+        id: 5,
         name: 'Видеокарты'
       }, {
-        id: 2,
+        id: 6,
         name: 'Процессоры'
       }, {
-        id: 3,
-        name: 'ОЗУ'
+        id: 7,
+        name: 'SSD/HDD'
       }]
     };
   },
+  computed: {
+    fullname: function fullname() {
+      return this.name + ' ' + this.lastname;
+    },
+    reversedText: function reversedText() {
+      return this.text.split('').reverse().join('');
+    },
+    buttonClass: function buttonClass() {
+      return this.selected ? 'btn-success' : 'btn-primary';
+    }
+  },
+  watch: {
+    selected: function selected(newValue, oldValue) {
+      console.log("\u043D\u043E\u0432\u043E\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435: ".concat(newValue, ", \u0441\u0442\u0430\u0440\u043E\u0435 - ").concat(oldValue));
+    }
+  },
   methods: {
+    getData: function getData() {
+      var _this = this;
+
+      var params = {
+        id: 1
+      };
+      axios.get('/api/test', {
+        params: params
+      }) // указание params для get через {{}} 
+      //axios.post('/api/test', params) // указание params для post не требует {{}}
+      .then(function (response) {
+        _this.users = response.data;
+      });
+    },
+    reverseText: function reverseText() {
+      return this.text.split('').reverse().join('');
+    },
     addCategory: function addCategory() {
       this.categories.push({
-        id: 4,
-        name: 'SSD/HDD'
+        id: 8,
+        name: 'ОЗУ'
       });
     },
     counterPlus: function counterPlus() {
       this.counter += 1;
+    },
+    listenInput: function listenInput() {
+      console.log('Пользователь ввел ' + this.inputText);
     }
   },
   mounted: function mounted() {
@@ -28000,7 +28084,17 @@ var render = function () {
           return _c("tr", { key: category.id }, [
             _c("td", [_vm._v(_vm._s(index + 1))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(category.name))]),
+            _c("td", [
+              _c("a", { attrs: { href: "/category/" + category.id } }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(category.name) +
+                    "  (" +
+                    _vm._s(category.id) +
+                    ")\n                    "
+                ),
+              ]),
+            ]),
           ])
         }),
         0
@@ -28012,6 +28106,166 @@ var render = function () {
       { staticClass: "btn btn-primary", on: { click: _vm.addCategory } },
       [_vm._v("Добавить категорию")]
     ),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v("\n    " + _vm._s(_vm.fullname) + "\n    "),
+    _c("br"),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.inputText,
+          expression: "inputText",
+        },
+      ],
+      staticClass: "form-control",
+      domProps: { value: _vm.inputText },
+      on: {
+        input: [
+          function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.inputText = $event.target.value
+          },
+          _vm.listenInput,
+        ],
+      },
+    }),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.name,
+          expression: "name",
+        },
+      ],
+      staticClass: "form-control",
+      domProps: { value: _vm.name },
+      on: {
+        input: function ($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.name = $event.target.value
+        },
+      },
+    }),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.text,
+          expression: "text",
+        },
+      ],
+      staticClass: "form-control",
+      domProps: { value: _vm.text },
+      on: {
+        input: function ($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.text = $event.target.value
+        },
+      },
+    }),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v("\n    " + _vm._s(_vm.reversedText) + " "),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v("\n    " + _vm._s(_vm.reverseText()) + " "),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.selected,
+            expression: "selected",
+          },
+        ],
+        staticClass: "form-control mb-5",
+        on: {
+          change: function ($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function (o) {
+                return o.selected
+              })
+              .map(function (o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.selected = $event.target.multiple
+              ? $$selectedVal
+              : $$selectedVal[0]
+          },
+        },
+      },
+      [
+        _c(
+          "option",
+          { attrs: { selected: "", disabled: "" }, domProps: { value: null } },
+          [_vm._v("-- Выберите значение --")]
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.options, function (option, idx) {
+          return _c("option", { key: idx, domProps: { value: option } }, [
+            _vm._v("\n            " + _vm._s(option) + "\n        "),
+          ])
+        }),
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn mt-5",
+        class: _vm.buttonClass,
+        attrs: { disabled: !_vm.selected },
+      },
+      [_vm._v("SAVE")]
+    ),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("button", { staticClass: "btn btn-info", on: { click: _vm.getData } }, [
+      _vm._v("Получить данные"),
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-bordered" }, [
+      _c(
+        "tbody",
+        [
+          _vm._l(_vm.users, function (user) {
+            return _c("tr", { key: user.id }, [
+              _c("td", [_vm._v(_vm._s(user.id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.email))]),
+            ])
+          }),
+          _vm._v(" "),
+          !_vm.users.length ? _c("tr", [_vm._m(1)]) : _vm._e(),
+        ],
+        2
+      ),
+    ]),
   ])
 }
 var staticRenderFns = [
@@ -28024,6 +28278,18 @@ var staticRenderFns = [
         _c("th", [_vm._v(" # ")]),
         _vm._v(" "),
         _c("th", [_vm._v(" Категория ")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-center", attrs: { colspan: "3" } }, [
+      _c("em", [
+        _vm._v(
+          "\n                        Данные пока не получены\n                    "
+        ),
       ]),
     ])
   },

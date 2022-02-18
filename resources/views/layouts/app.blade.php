@@ -92,11 +92,11 @@
         </nav>
 
         <main class="py-4">
-            <!--
+            
             <div class="mb-4">
                 <example-component></example-component>
             </div>
-            -->
+            
             @yield('content')
         </main>
     </div>

@@ -24,5 +24,5 @@ Route::get('/test', function (){
     if (!$id){
         return User::get();
     }
-    return User::findOrFail($id);
+    return [User::findOrFail($id)];
 });
