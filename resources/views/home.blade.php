@@ -2,6 +2,13 @@
 
 @section('content')
 
+<categories-component 
+    :categories="{{$categories}}" 
+    route-category="{{route('category', '')}}"
+    page-title='Список категорий!' 
+    test='test'>
+</categories-component> <!-- переменные для передачи нельзя указывать в camelCase нужно использовать kebab-case, но в самом компоненте они будут доступны по camelCase! -->
+
 <div class="container">
 <!--
 @auth
@@ -23,7 +30,7 @@
         </div>
     </div>
 @endauth
--->
+
   <div class="row">
     @foreach ($categories as $category)
     <div class="card col-4">
@@ -41,5 +48,5 @@
     @endforeach
   </div>
 </div>
-
+-->
 @endsection
