@@ -54,6 +54,14 @@
     </form>
 </div>
 
+<div class="container">
+    <form method="post" action="{{route('importCategories')}}" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="file" class="form-control mb-2">
+        <button type="submit" class="btn btn-link">Загрузить категории</button>
+    </form>
+</div>
+
 <table class="table table-bordered">
     <thead>
         <tr>

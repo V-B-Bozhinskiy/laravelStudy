@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ExportCategories;
 use App\Jobs\ExportProducts;
+use App\Jobs\ImportCategoties;
+use App\Jobs\ImportProducts;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
@@ -66,6 +68,37 @@ class AdminController extends Controller
     {
         ExportProducts::dispatch();
         session()->flash('startExportProducts');
+        return back();
+    }
+
+    public function importCategories()
+    {
+        request()->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+        $input = request()->all();
+        $file = $input['file'];
+        $ext = $file->getClientOriginalExtension();
+        $filename = time() . rand(10000,99999) . '.' . $ext;
+        $file->storeAs('public/categories/importFiles',$filename);
+        //dd(Auth::user()->id);
+        ImportCategoties::dispatch("storage/app/public/categories/importFiles/${filename}",Auth::user()->id);
+        session()->flash('startImportCategories');
+        return back();
+    }
+
+    public function importProducts()
+    {   
+        request()->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+        $input = request()->all();
+        $file = $input['file'];
+        $ext = $file->getClientOriginalExtension();
+        $filename = time() . rand(10000,99999) . '.' . $ext;
+        $file->storeAs('public/products/importFiles',$filename);
+        ImportProducts::dispatch("storage/app/public/products/importFiles/${filename}");
+        session()->flash('startImportProducts');
         return back();
     }
 

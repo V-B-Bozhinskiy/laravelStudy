@@ -35,6 +35,8 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function () {
     
     Route::post('/exportCategories', [AdminController::class, 'exportCategories'])->name('exportCategories');
     Route::post('/exportProducts', [AdminController::class, 'exportProducts'])->name('exportProducts');
+    Route::post('/importCategories', [AdminController::class, 'importCategories'])->name('importCategories');
+    Route::post('/importProducts', [AdminController::class, 'importProducts'])->name('importProducts');
 });
 
 Route::prefix('cart')->group(function () {
