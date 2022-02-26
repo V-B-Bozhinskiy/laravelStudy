@@ -83,6 +83,7 @@ class AdminController extends Controller
         $file->storeAs('public/categories/importFiles',$filename);
         //dd(Auth::user()->id);
         ImportCategoties::dispatch("storage/app/public/categories/importFiles/${filename}",Auth::user()->id);
+        //dd($test);
         session()->flash('startImportCategories');
         return back();
     }
@@ -97,7 +98,7 @@ class AdminController extends Controller
         $ext = $file->getClientOriginalExtension();
         $filename = time() . rand(10000,99999) . '.' . $ext;
         $file->storeAs('public/products/importFiles',$filename);
-        ImportProducts::dispatch("storage/app/public/products/importFiles/${filename}");
+        ImportProducts::dispatch("storage/app/public/products/importFiles/${filename}",Auth::user()->id);
         session()->flash('startImportProducts');
         return back();
     }

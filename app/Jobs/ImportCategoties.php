@@ -53,7 +53,7 @@ class ImportCategoties implements ShouldQueue
             //dump($columns);
 
             $data = array_combine($columns,$row);
-            dump($data);
+            //dump($data);
             if (array_key_exists('id',$data)){
                 if ($data['id'] != ''){
                     $findCategory = Category::find($data['id']);

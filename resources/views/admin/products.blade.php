@@ -24,7 +24,7 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <form method="post" action="{{route('adminAddProduct')}}" class="mb-4" enctype="multipart/form-data">
+        <form method="post" action="{{route('adminAddProduct')}}" enctype="multipart/form-data">
             @csrf
             <input class="form-control mb-2" name='name' placeholder="Наименование товара">
             <textarea class="form-control mb-2" name='description' placeholder="Описание товара"></textarea>
@@ -50,10 +50,30 @@
 </div>
 @endif
 
+@if (session('startImportProducts'))
+<div class="alert alert-success">
+    Загрузка продуктов запущена
+</div>
+@endif
+
+@if (session('Error with ImportProducts'))
+<div class="alert alert-danger">
+    При загрузке продуктов возникла ошибка
+</div>
+@endif
+
 <div class="container">
     <form method="post" action="{{route('exportProducts')}}">
         @csrf
         <button type="submit" class="btn btn-link">Выгрузить продукты</button>
+    </form>
+</div>
+
+<div class="container">
+    <form method="post" action="{{route('importProducts')}}" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="file" class="form-control mb-2">
+        <button type="submit" class="btn btn-link">Загрузить продукты</button>
     </form>
 </div>
 

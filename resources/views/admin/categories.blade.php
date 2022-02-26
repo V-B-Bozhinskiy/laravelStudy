@@ -24,7 +24,7 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <form method="post" action="{{route('adminAddCategory')}}" class="mb-4" enctype="multipart/form-data">
+        <form method="post" action="{{route('adminAddCategory')}}" enctype="multipart/form-data">
             @csrf
             <input class="form-control mb-2" name='name' placeholder="Наименование категории">
             <textarea class="form-control mb-2" name='description' placeholder="Описание категории"></textarea>
@@ -44,6 +44,18 @@
 @if (session('startExportCategories'))
 <div class="alert alert-success">
     Выгрузка категорий запущена
+</div>
+@endif
+
+@if (session('startImportCategories'))
+<div class="alert alert-success">
+    Загрузка категорий запущена
+</div>
+@endif
+
+@if (session('Error with App\Jobs\ImportCategoties'))
+<div class="alert alert-danger">
+    При загрузке категорий возникла ошибка
 </div>
 @endif
 
