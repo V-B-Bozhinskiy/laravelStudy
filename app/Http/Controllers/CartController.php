@@ -37,7 +37,8 @@ class CartController extends Controller
         $cart = session('cart') ?? [];
         
         if (!isset($cart[$productId]))
-        return back();
+        return 0;
+        //return back();
 
         $quantity = $cart[$productId];
         if ($quantity > 1){
@@ -47,7 +48,8 @@ class CartController extends Controller
         }
 
         session()->put('cart',$cart);
-        return back();
+        return $cart[$productId] ?? 0;
+        //return back();
     }
 
     public function addToCart () {
@@ -61,17 +63,19 @@ class CartController extends Controller
         }
 
         session()->put('cart',$cart);
-        return back();
+        return $cart[$productId];
+        //return back();
     }
 
     public function createOrder(){
+        //sleep(1);
         request()->validate([
             'name' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
+            'email' => 'required|email|unique:users',
+            'address' => 'required'
+            //'register_confirmation' => 'accepted'
         ]);
-
-        try{
+        //try{
         DB::transaction(function () {
             $user = Auth::user();
                 $password = '';
@@ -120,11 +124,15 @@ class CartController extends Controller
                 Mail::to($user->email)->send(new OrderCreated($data));
         });
         session()->forget('cart');
-        return back();
-        } catch (Exception $e) {
+        $user = Auth::user();
+        //session()->flash('orderCreatedSuccess');
+        //return back();
+        return $user->id;
+        //} catch (Exception $e) {
             //dd($e);
-            return back();        
-        }   
+        //    return back();
+            //return false;        
+        //}   
     }
 
     public function retryOrder(){

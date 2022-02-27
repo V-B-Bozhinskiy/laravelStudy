@@ -25,10 +25,10 @@ export default {
             console.log(`Клик в дочернем компоненте (${data})`)
         }
     },
-    mounted() {
-            console.log('Categories Component mounted.')
-            console.log(this.test)
-        }
+    mounted (){
+        let quantity = /\d+/.exec(cardProductsQuantity.textContent)
+        localStorage.cardProductsQuantity = quantity
+    }
 }
 </script>
 

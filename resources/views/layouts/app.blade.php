@@ -46,7 +46,9 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('cart') }}">Корзина ({{ array_sum(session('cart') ?? []) }})</a>
+                                    <a class="nav-link" href="{{ route('cart') }}">
+                                       Корзина <span id='cardProductsQuantity'>({{ array_sum(session('cart') ?? []) }})</span> 
+                                    </a>
                                 </li>
                         @guest
                             @if (Route::has('login'))
