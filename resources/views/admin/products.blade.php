@@ -44,6 +44,82 @@
   </div>
 </div>
 
+<div class="accordion" id="accordionEdit">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Изменить товар
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionEdit">
+      <div class="accordion-body">
+        <form method="post" action="{{route('adminEditProduct')}}" enctype="multipart/form-data">
+            @csrf
+            <select class="form-control mb-2" name='product_id'>
+                <option disabled selected>--Выберите товар--</option>
+                @foreach ($products as $product)
+                    <option value="{{$product->id}}">{{$product->name}}</option>
+                @endforeach
+            </select>
+            Если оставить поле пустым, оно не будет обновлено
+            <input class="form-control mb-2" name='newName' placeholder="Новое наименование товара">
+            <textarea class="form-control mb-2" name='newDescription' placeholder="Новое описание товара"></textarea>
+            <input class="form-control mb-2" name='newPrice' placeholder="Новая цена товара">
+            <select class="form-control mb-2" name='newCategory_id'>
+                <option disabled selected>--Выберите новую категорию--</option>
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+            <label class="form-label">Новое изображение для товара</label>
+            <input type="file" name="newPicture" class="form-control mb-2">
+            <button class="btn btn-success" type="submit">Изменить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion" id="accordionFilesActions">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Загрузка/Выгрузка через файл
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionFilesActions">
+      <div class="accordion-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Выгрузка</td>
+                    <td>Загрузка</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <form method="post" action="{{route('exportProducts')}}">
+                            @csrf
+                            <button type="submit" class="btn btn-link">Выгрузить продукты</button>
+                            <br>Файл выгрузки будет доступен <br> на сервере по пути .\exportProducts.csv
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="{{route('importProducts')}}" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="file" class="form-control mb-2">
+                            <button type="submit" class="btn btn-link">Загрузить продукты</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 @if (session('startExportProducts'))
 <div class="alert alert-success">
     Выгрузка продуктов запущена
@@ -61,21 +137,6 @@
     При загрузке продуктов возникла ошибка
 </div>
 @endif
-
-<div class="container">
-    <form method="post" action="{{route('exportProducts')}}">
-        @csrf
-        <button type="submit" class="btn btn-link">Выгрузить продукты</button>
-    </form>
-</div>
-
-<div class="container">
-    <form method="post" action="{{route('importProducts')}}" enctype="multipart/form-data">
-        @csrf
-        <input type="file" name="file" class="form-control mb-2">
-        <button type="submit" class="btn btn-link">Загрузить продукты</button>
-    </form>
-</div>
 
 <h1>
     Список продуктов

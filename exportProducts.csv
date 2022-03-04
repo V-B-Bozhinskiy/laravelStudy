@@ -16,9 +16,9 @@ id;name;description;picture;category_id;price;created_at;updated_at
 15;"dicta aspernatur maiores qui velit";"Dolorem officia sunt quas sapiente tempora ea quia.";products/noimage.jpg;418897.03;5;2022-01-26T09:39:08.000000Z;2022-01-26T09:39:08.000000Z
 16;"quia sed illum ut quis";"Libero repudiandae laborum sit amet dolorum reprehenderit quod.";products/noimage.jpg;322100.62;8;2022-01-26T09:39:08.000000Z;2022-01-26T09:39:08.000000Z
 17;"commodi placeat totam";"Beatae dolores facere suscipit cupiditate.";products/noimage.jpg;194346.62;7;2022-01-26T09:39:08.000000Z;2022-01-26T09:39:08.000000Z
-18;"accusantium deleniti et et iste";"Sapiente aut reiciendis quia consequatur consequuntur quisquam voluptatem.";products/noimage.jpg;703081.46;7;2022-01-26T09:39:08.000000Z;2022-01-26T09:39:08.000000Z
+18;Мониторы;"Мониторы и VR";products/noimage.jpg;703081.46;7;2022-01-26T09:39:08.000000Z;2022-02-25T17:38:47.000000Z
 19;"pariatur recusandae incidunt eaque vel";"Quasi nisi aut ea eum autem praesentium dolor.";products/noimage.jpg;517880.04;5;2022-01-26T09:39:08.000000Z;2022-01-26T09:39:08.000000Z
-20;"animi consectetur perspiciatis quia mollitia";"Iste sapiente et sit voluptas aliquam ipsam odio praesentium.";products/noimage.jpg;302708.56;8;2022-01-26T09:39:08.000000Z;2022-01-26T09:39:08.000000Z
+20;КМТ;"Принтеры, сканеры, МФУ";products/noimage.jpg;302708.56;8;2022-01-26T09:39:08.000000Z;2022-02-25T17:38:47.000000Z
 21;"sapiente facilis neque";"Delectus sint magnam animi earum libero fugit blanditiis.";products/noimage.jpg;154250.78;6;2022-01-26T09:39:51.000000Z;2022-01-26T09:39:51.000000Z
 22;"doloremque exercitationem rerum qui quisquam est";"Sed tempore nesciunt est voluptatem.";products/noimage.jpg;827728.64;6;2022-01-26T09:39:51.000000Z;2022-01-26T09:39:51.000000Z
 23;"quaerat quasi ex";"Et deleniti officia placeat eius.";products/noimage.jpg;617670.51;5;2022-01-26T09:39:51.000000Z;2022-01-26T09:39:51.000000Z
@@ -38,4 +38,15 @@ id;name;description;picture;category_id;price;created_at;updated_at
 37;"ducimus necessitatibus iusto commodi quis";"Corrupti consequatur qui possimus labore quidem iusto saepe quibusdam.";products/noimage.jpg;890089.86;5;2022-01-26T09:39:51.000000Z;2022-01-26T09:39:51.000000Z
 38;"unde accusantium qui eum";"Quae aspernatur sint qui excepturi.";products/noimage.jpg;421827;9;2022-01-26T09:39:51.000000Z;2022-01-26T09:39:51.000000Z
 39;"delectus ipsum et vitae";"Possimus placeat enim omnis labore autem.";products/noimage.jpg;765148.91;5;2022-01-26T09:39:51.000000Z;2022-01-26T09:39:51.000000Z
-40;"Новый товар";ТЕСТ;products/164504622858540.bmp;12345;11;2022-02-16T21:17:08.000000Z;2022-02-16T21:17:08.000000Z
+40;"Новый товар";ТЕСТ;products/164608115933521.jpg;1234;12;2022-02-16T21:17:08.000000Z;2022-02-28T20:45:59.000000Z
+41;"AMD RYZEN 5 3600";"SocketAM4, (6/12), DDR4x2, PCI Express 4.0";products/noimage.jpg;27800;6;2022-02-25T19:36:34.000000Z;2022-02-28T20:52:58.000000Z
+42;"Intel Core i7 - 9700KF";"Socket 1151 v2, 8-ядерный, 3600 МГц, Turbo: 4900 МГц, Coffee Lake Refresh-S, Кэш L2 - 1.5 Мб, Кэш L3 - 12 Мб, 14 нм, 95 Вт";products/noimage.jpg;24500;6;2022-02-25T19:36:34.000000Z;2022-02-28T20:52:58.000000Z
+43;"AeroCool Aero One Black";"ATX, mATX, Mini-ITX, Midi-Tower, без БП, с окном, 2xUSB 3.0, Audio";products/noimage.jpg;4300;9;2022-02-25T19:36:34.000000Z;2022-02-25T19:46:55.000000Z
+44;"AMD RYZEN 5 3600x";"SocketAM4, (6/12), DDR4x2, PCI Express 4.0";products/noimage.jpg;29500;6;2022-02-25T19:52:14.000000Z;2022-02-28T20:52:58.000000Z
+45;"Intel Core i7 - 9700";"Socket 1151 v2, 8-ядерный, 3600 МГц, Turbo: 4700 МГц, Coffee Lake Refresh-S, Кэш L2 - 1.5 Мб, Кэш L3 - 12 Мб, 14 нм, 95 Вт";products/noimage.jpg;26500;6;2022-02-25T19:52:14.000000Z;2022-02-28T20:52:58.000000Z
+46;"AeroCool Aero One Red";"ATX, mATX, Mini-ITX, Midi-Tower, без БП, с окном, 2xUSB 3.0, Audio";products/noimage.jpg;4300;9;2022-02-25T19:52:14.000000Z;2022-02-25T19:52:14.000000Z
+47;"AMD RYZEN 5 3600x";"SocketAM4, (6/12), DDR4x2, PCI Express 4.0";products/noimage.jpg;28000;5;2022-02-28T14:46:43.000000Z;2022-02-28T14:46:43.000000Z
+48;"Intel Core i7 - 9700";"Socket 1151 v2, 8-ядерный, 3600 МГц, Turbo: 4700 МГц, Coffee Lake Refresh-S, Кэш L2 - 1.5 Мб, Кэш L3 - 12 Мб, 14 нм, 95 Вт";products/noimage.jpg;23000;5;2022-02-28T14:46:43.000000Z;2022-02-28T14:46:43.000000Z
+49;"AeroCool Aero One Red";"ATX, mATX, Mini-ITX, Midi-Tower, без БП, с окном, 2xUSB 3.0, Audio";products/noimage.jpg;4300;9;2022-02-28T14:46:43.000000Z;2022-02-28T14:46:43.000000Z
+50;"Жесткий диск";"Немягкий и хрупкий";products/164614422563707.jpg;12345.67;7;2022-03-01T14:17:05.000000Z;2022-03-01T14:18:44.000000Z
+51;новый;тест;products/164615214176478.jpg;123;12;2022-03-01T16:29:01.000000Z;2022-03-01T16:29:01.000000Z

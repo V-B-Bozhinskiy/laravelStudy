@@ -132,6 +132,40 @@ class AdminController extends Controller
         return back();
     }
 
+    public function editCategory(){
+        $input = request()->all();
+        $name = $input['newName'];
+        $description = $input['newDescription'];
+        $picture = $input['newPicture'] ?? null;
+
+        request()->validate([
+            'category_id' => 'required',
+            'newName' => 'min:3|nullable',
+            'newDescription' => 'nullable',
+            'newPicture' => 'mimes:jpg,bmp,webp|nullable'
+        ]);
+
+        $editCategory = Category::find(request('category_id'));
+
+        if ($name){
+            $editCategory->name = $name;
+        }
+
+        if ($description){
+            $editCategory->description = $description;
+        }
+        
+        if ($picture){
+            $ext = $picture->getClientOriginalExtension();
+            $filename = time() . rand(10000,99999) . '.' . $ext;
+            $picture->storeAs('public/categories',$filename);
+            $editCategory->picture = "categories/$filename";
+        }
+
+        $editCategory->save();
+        return back();
+    }
+
     public function addProduct(){
         request()->validate([
             'name' => 'required|min:3',
@@ -160,6 +194,50 @@ class AdminController extends Controller
         }
 
         $newProduct->save();
+        return back();
+    }
+
+    public function editProduct(){
+        request()->validate([
+            'product_id' => 'required',
+            'newName' => 'nullable|min:3',
+            'newDescription' => 'nullable',
+            'newCategory_id' => 'nullable',
+            'newPrice' => 'nullable|numeric',
+            'newPicture' => 'mimes:jpg,bmp,webp|nullable'
+        ]);
+        $input = request()->all();
+        $name = $input['newName'];
+        $description = $input['newDescription'];
+        $picture = $input['newPicture'] ?? null;
+        $price = $input['newPrice'];
+        $category_id = $input['newCategory_id'] ?? null;
+        $editProduct = Product::find(request('product_id'));
+        
+        if ($name){
+            $editProduct->name = $name;
+        }
+
+        if ($description){
+            $editProduct->description = $description;
+        }
+
+        if ($price){
+            $editProduct->price = $price;
+        }
+
+        if ($category_id){
+            $editProduct->category_id = $category_id;
+        }
+
+        if ($picture){
+            $ext = $picture->getClientOriginalExtension();
+            $filename = time() . rand(10000,99999) . '.' . $ext;
+            $picture->storeAs('public/products',$filename);
+            $editProduct->picture = "products/$filename";
+        }
+
+        $editProduct->save();
         return back();
     }
 

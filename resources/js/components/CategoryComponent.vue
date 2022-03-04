@@ -1,6 +1,6 @@
 <template>
     <div class="card col-4">
-        <img :src="`storage/${category.picture}`" class="card-img-top" alt="category.name">
+        <img :src="`storage/${category.picture}`" class="card-img-top picture-size" alt="category.name">
             <div class="card-body">
                 <h5 class="card-title">
                     {{category.name}}
@@ -28,5 +28,8 @@ export default {
 </script>
 
 <style scoped>
-
+    .picture-size{
+        width: 354px;
+        height: 292px;
+    }
 </style>
