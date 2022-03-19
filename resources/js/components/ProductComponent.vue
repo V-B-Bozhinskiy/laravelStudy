@@ -36,7 +36,9 @@ export default {
             }
             axios.post(`/cart/${type}Cart`, params)
                 .then(response => {
-                    this.cartQuantity = response.data
+                    this.cartQuantity = response.data.productQuantity
+                    this.$store.dispatch('changeCartProductsQuantity',  response.data.cartProductsQuantity)
+                    /*
                     let quantity = Number(localStorage.cardProductsQuantity)
                     if (type == 'removeFrom'){
                         quantity -= 1
@@ -46,6 +48,7 @@ export default {
                     localStorage.cardProductsQuantity = quantity
                     console.log(`Отправлено изменение корзины: ${quantity}`)
                     this.$emit('cardCounterChange',quantity)
+                    */
                 })
         },
     }

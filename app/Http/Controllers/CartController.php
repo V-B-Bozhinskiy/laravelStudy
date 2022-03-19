@@ -32,6 +32,10 @@ class CartController extends Controller
         return view('cart', compact('products','user', 'address'));
     }
 
+    public function productsQuantity(){
+        return array_sum(session('cart') ?? []);
+    }
+
     public function removeFromCart () {
         $productId = request('id');
         $cart = session('cart') ?? [];
@@ -48,7 +52,11 @@ class CartController extends Controller
         }
 
         session()->put('cart',$cart);
-        return $cart[$productId] ?? 0;
+        return [
+            'productQuantity'=> $cart[$productId] ?? 0,
+            'cartProductsQuantity' => array_sum($cart)
+        ];
+        //return $cart[$productId] ?? 0;
         //return back();
     }
 
@@ -63,7 +71,11 @@ class CartController extends Controller
         }
 
         session()->put('cart',$cart);
-        return $cart[$productId];
+        return [
+            'productQuantity'=> $cart[$productId] ?? 0,
+            'cartProductsQuantity' => array_sum($cart)
+        ];
+        //return $cart[$productId];
         //return back();
     }
 

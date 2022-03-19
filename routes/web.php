@@ -43,6 +43,7 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'cart'])->name('cart');
+    Route::get('/productsQuantity', [CartController::class, 'productsQuantity']);
     Route::post('/removeFromCart', [CartController::class, 'removeFromCart'])->name('removeFromCart');
     Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
     Route::post('/createOrder', [CartController::class, 'createOrder'])->name('createOrder');
