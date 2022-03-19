@@ -79,7 +79,7 @@ export default {
             const params = {
                 id
             }
-            axios.post(`/cart/${type}Cart`, params)
+            axios.post(`/api/cart/${type}Cart`, params)
                 .then(response => {
                     const index = this.products.findIndex((product) => {
                         return product.id == id
@@ -99,7 +99,7 @@ export default {
             }
             this.loading = true
             this.errors = []
-            axios.post('/cart/createOrder', params)
+            axios.post('/api/cart/createOrder', params)
                 .then(response => {
                     console.log(response)
                     document.location.href = `/profile/${response.data}/orders` 

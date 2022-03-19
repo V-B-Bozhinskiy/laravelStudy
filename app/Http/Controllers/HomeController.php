@@ -39,6 +39,11 @@ class HomeController extends Controller
       return view('category', compact('category'));
     }
 
+    public function getCategories()
+    {
+        return Category::get();
+    }
+
     public function getProducts(Category $category)
     {
         $products = $category->products;
