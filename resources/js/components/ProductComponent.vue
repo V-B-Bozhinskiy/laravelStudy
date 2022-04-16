@@ -25,31 +25,41 @@
 export default {
     props: ['product'],
     data(){
+        let cart = JSON.parse(localStorage.getItem('cart'))
+        if (!cart){ cart = {} }
         return {
-            cartQuantity: this.product.quantity
+            cartQuantity: cart[this.product.id] ?? 0
         }       
     },
     methods:{
         cartAction (type) {
-            const params = {
-                id: this.product.id
+            let cart = JSON.parse(localStorage.getItem('cart'))
+            if (type == 'addTo'){
+                if (!cart){ cart = {} }
+                if (typeof cart[this.product.id] == 'undefined'){
+                    cart[this.product.id] = 1
+                } else {
+                    cart[this.product.id] += 1
+                } 
+                localStorage.setItem('cart',JSON.stringify(cart))
+                this.cartQuantity = cart[this.product.id]
+
+            } else if (type == 'removeFrom'){
+                if (cart[this.product.id] == 1){
+                    delete cart[this.product.id]
+                    this.cartQuantity = 0
+                } else {
+                    cart[this.product.id] -= 1
+                    this.cartQuantity = cart[this.product.id]
+                } 
+                localStorage.setItem('cart',JSON.stringify(cart))
             }
-            axios.post(`/api/cart/${type}Cart`, params)
-                .then(response => {
-                    this.cartQuantity = response.data.productQuantity
-                    this.$store.dispatch('changeCartProductsQuantity',  response.data.cartProductsQuantity)
-                    /*
-                    let quantity = Number(localStorage.cardProductsQuantity)
-                    if (type == 'removeFrom'){
-                        quantity -= 1
-                    } else {
-                        quantity += 1
-                    }
-                    localStorage.cardProductsQuantity = quantity
-                    console.log(`Отправлено изменение корзины: ${quantity}`)
-                    this.$emit('cardCounterChange',quantity)
-                    */
-                })
+
+            let quantity = 0
+            for (let key in cart) {
+                quantity += cart[key]
+            }
+            this.$store.dispatch('changeCartProductsQuantity', quantity)
         },
     }
 }

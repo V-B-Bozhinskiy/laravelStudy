@@ -56,10 +56,10 @@
 
 <script>
 export default {
-    props: ['prods', 'user', 'address'],
     data () {
         return {
-            products: this.prods,
+            user: null,
+            products: [],//this.prods,
             errors: [],
             loading: false,
             cardName: (this.user) ? this.user.name : '',
@@ -76,32 +76,49 @@ export default {
     },
     methods:{
         cartAction (type, id) {
-            const params = {
-                id
-            }
-            axios.post(`/api/cart/${type}Cart`, params)
-                .then(response => {
+            let cart = JSON.parse(localStorage.getItem('cart'))
+             if (type == 'addTo'){
+                if (!cart){ cart = {} }
+                cart[id] += 1
+                localStorage.setItem('cart',JSON.stringify(cart))
+                
+                const index = this.products.findIndex((product) => {
+                        return product.id == id
+                    })
+                this.products[index].quantity = cart[id]
+
+            } else if (type == 'removeFrom'){
                     const index = this.products.findIndex((product) => {
                         return product.id == id
                     })
-                    if (response.data > 0){
-                        this.products[index].quantity = response.data
-                    } else {
-                        this.products.splice(index,1)
-                    }
-                })
+                if (cart[id] == 1){
+                    delete cart[id]
+                    this.products.splice(index,1)
+                } else {
+                    cart[id] -= 1
+                    this.products[index].quantity = cart[id]
+                }
+                localStorage.setItem('cart',JSON.stringify(cart))
+            }
+            let quantity = 0
+            for (let key in cart) {
+                quantity += cart[key]
+            }
+            this.$store.dispatch('changeCartProductsQuantity', quantity)
         },
         createOrder(){
             const params ={
                 name: this.cardName,
                 email: this.cardEmail,
-                address: this.cardAddress
+                address: this.cardAddress,
+                products: JSON.parse(localStorage.getItem('cart'))
             }
             this.loading = true
             this.errors = []
             axios.post('/api/cart/createOrder', params)
                 .then(response => {
                     console.log(response)
+                    localStorage.setItem('cart', JSON.stringify({}))
                     document.location.href = `/profile/${response.data}/orders` 
                 })
                 .catch(error => {
@@ -118,6 +135,16 @@ export default {
                     this.loading = false
                 })
         }
+    },
+    async mounted(){
+        const cart = JSON.parse(localStorage.getItem('cart'))
+        const params = {
+            products: cart
+        }
+        const cartInfo = await axios.get('/api/cart/info',{params})
+        this.products = cartInfo.data.products
+        this.user = cartInfo.data.user
+        this.address = cartInfo.data.address
     }
 }
 </script>
