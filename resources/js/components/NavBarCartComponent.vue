@@ -1,9 +1,16 @@
 <template>
-   <li class="nav-item">
+    <div>
+        <li class="nav-item">
         <router-link class="nav-link" to="/cart">
             Корзина <span id='cardProductsQuantity'>({{ cartProductsQuantity }})</span> 
         </router-link>
-    </li>
+        </li>
+        <li class="nav-item">
+        <router-link class="nav-link" to="/profile">
+            Профиль
+        </router-link>
+        </li>
+    </div>
 </template>
 
 <script>

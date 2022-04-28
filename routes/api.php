@@ -20,11 +20,18 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::get('/user', function (){
+    $user = User::find(1)->load('addresses');
+    return [
+        'user' => $user
+    ];
 });
 
-Route::get('/test', function (){
+Route::post('/test', function (){
     $id = request('id');
     if (!$id){
         return User::get();

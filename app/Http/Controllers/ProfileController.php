@@ -29,7 +29,7 @@ class ProfileController extends Controller
         $email = $input['email'];
         $userId = $input['userId'];
         $picture = $input['picture'] ?? null;
-        $newAddress = $input['new_address'];
+        $newAddress = $input['new_address'] ?? null;
         $addAsMainAddress = $input['addAsMainAddress'] ?? 0;
         $user = User::find($userId);
         // dd(request());
@@ -42,7 +42,7 @@ class ProfileController extends Controller
             'password' => 'confirmed|min:8|nullable' //проверяет совпадение password_confirmation и password
        ]);
 
-       if ($input['password']){
+       if (isset($input['password'])){
         if ($input['current_password']){
             $user->password = Hash::make($input['password']);
             $user->save();
